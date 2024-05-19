@@ -20,6 +20,7 @@ app.use(express.json());
 // Endpoint
 app.post('/transaction', eventRepo.addTransaction);
 app.get('/transaction', eventRepo.getAllTransactions);
+app.get('/transaction/:id', eventRepo.getTransactionById);
 app.delete('/transaction/:id', eventRepo.deleteTransaction);
 app.put('/transaction/:id', eventRepo.updateTransaction);
 

@@ -43,6 +43,25 @@ async function getAllTransactions(req, res){
     }
 }
 
+async function getTransactionById(req, res){
+    const eventId = req.params.id;
+
+    try {
+        const result = await pool.query(
+            'SELECT * FROM catatan_finansial WHERE id = $1',
+            [eventId]
+        );
+        const event = result.rows[0];
+        if (event) {
+            res.status(200).json(event);
+        } else {
+            res.status(404).json({ error: "Event not found" });
+        }
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
 async function updateTransaction(req, res) {
     const { id } = req.params;
     const { transaksi, jumlah_nominal, tanggal } = req.body;
@@ -82,4 +101,5 @@ module.exports = {
     getAllTransactions,
     updateTransaction,
     deleteTransaction,
+    getTransactionById
 };
